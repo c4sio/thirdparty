@@ -1,0 +1,10 @@
+<div class="multiselect">
+  <select id="multi-select" class="multi-select" multiple="multiple"
+      data-ng-model="selectModel">
+    <option data-ng-repeat="item in items"
+        data-ng-value="item[optionValue]"
+        data-ng-bind="(!userLanguage) ? item[optionText] : item[optionText][userLanguage]"
+        data-ng-selected="isSelected">
+    </option>
+  </select>
+</div>

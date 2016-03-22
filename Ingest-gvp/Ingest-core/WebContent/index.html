@@ -1,0 +1,107 @@
+<!doctype html>
+<html data-ng-app="ingest">
+	<head>
+		<title>INGEST</title>
+
+		<meta charset="utf-8">
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+
+		<link rel="stylesheet" href="assets/css/bootstrap.css">
+		<link rel="stylesheet" href="assets/css/font-awesome.css">
+		<link rel="stylesheet" href="assets/css/ace-fonts.css">
+		<link rel="stylesheet" href="assets/css/ace.css">
+		<link rel="stylesheet" href="assets/css/bootstrap-multiselect.css">
+		<link rel="stylesheet" href="assets/css/chosen.min.css">
+		<link rel="stylesheet" href="assets/css/datepicker.css">
+		
+		<!-- Global Directives -->
+		<link rel="stylesheet" href="directives/multiselect/styles/style.css">
+		<link rel="stylesheet" href="directives/spinner/styles/style.css">	
+
+	</head>
+
+<body class="no-skin">
+	<div>
+		<!-- Header -->
+		<div data-ng-include data-src="'pages/header/tmpl.html'"></div>
+		<!-- end:: Header -->
+
+		<!-- Container -->
+		<div class="main-content">
+			<!-- Breadcrumb 
+			<div class="breadcrumbs" id="breadcrumbs">
+				<div data-breadcrumb></div>
+				<!-- nav-search 
+				<div data-nav-search></div>
+				<!-- end: nav-search
+			</div>
+			 end: Breadcrumb -->
+			 
+			<!-- System Messages -->
+			<div data-toaster-container data-toaster-options="{'time-out': 3000, 'position-class': 'toast-top-center'}"></div>
+			<!-- end: System Messages -->
+
+			<!-- Page Content -->
+			<div class="page-content">
+				<div class="page-content-area" data-ng-view></div>
+			</div>
+			<!-- end:: Page Content -->
+		</div>
+		<!-- end:: Container -->
+	</div>
+
+	<script type="text/javascript" src="assets/js/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="assets/js/ace-extra.js"></script>
+	<script type="text/javascript" src="assets/js/ace-elements.js"></script>
+	<script type="text/javascript" src="assets/js/angular.js"></script>
+	<script type="text/javascript" src="assets/js/angular-animate.js"></script>
+	<script type="text/javascript" src="assets/js/angular-route.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap.js"></script>
+	<script type="text/javascript" src="assets/js/ui-bootstrap-tpls-0.13.2.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-multiselect.js"></script>
+	<script type="text/javascript" src="assets/js/chosen.jquery.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript" src="assets/js/mask.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap-datepicker.pt-BR.min.js"></script>
+
+	<!-- Initialization -->
+	<script src="index.js"></script>
+
+	<!-- Constants -->
+	<script src="constants/config/constant.js"></script>
+	
+	<!-- Components -->
+	<script src="components/http-interceptor/http-interceptor.js"></script>
+	<script src="components/router/router.js"></script>
+	<script src="components/ngInfiniteScroll/ng-infinite-scroll.js"></script>
+	<script src="components/tc-angular-chartjs/Chart.js"></script>
+	<script src="components/tc-angular-chartjs/tc-angular-chartjs.js"></script>
+	
+	<!-- Modules -->
+	<script src="modules/toaster/toaster.js"></script>
+	<script src="modules/breadcrumb/controller.js"></script>
+	<script src="modules/breadcrumb/directive.js"></script>
+	<script src="modules/breadcrumb/service.js"></script>
+
+	<!-- Services -->	
+	<script src="services/request/service.js"></script>		
+	<script src="services/utils/service.js"></script>	
+	<script src="services/config/service.js"></script>
+	<script src="services/popup/service.js"></script>
+	
+	<!-- Global Directives -->
+	<script src="directives/multiselect/directive.js"></script>
+	<script src="directives/spinner/directive.js"></script>
+	<script src="directives/nav-search/directive.js"></script>
+
+	<!-- Pages -->
+	<script src="pages/header/controller.js"></script>
+	
+	<script src="pages/popups/dialog/controller.js"></script>
+	
+	<script src="pages/import/controller.js"></script>
+	<script src="pages/import/service.js"></script>	
+	<script src="pages/popups/import-upload/controller.js"></script>
+</body>
+</html>

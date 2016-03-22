@@ -1,0 +1,7 @@
+.import-upload .modal-header {
+  border-bottom: none;
+}
+
+.import-upload .modal-header .close {
+  margin-top: -10px;
+}

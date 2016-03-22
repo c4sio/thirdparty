@@ -1,0 +1,49 @@
+<div class="import-upload">
+  <div class="modal-header">
+    <button class="bootbox-close-button close"
+        data-ng-click="$dismiss()"
+        aria-hidden="true">x</button>
+    <h4 class="modal-title" id="myModalLabel">Selecionar arquivo</h4>
+  </div>
+  <div class="modal-body">
+    <div class="widget-box">
+      <div class="widget-header">
+        <h4 class="widget-title">Upload Arquivo</h4>
+      </div>
+      <div class="widget-body">
+        <div class="widget-main no-padding">
+          <form name="uploadForm" role="form" class="form-horizontal" novalidate>
+            <fieldset>              
+              <div class="form-group" data-ng-class="{'has-error': uploadForm.uploadedFile.$invalid}">
+                <div class="col-sm-8">
+                  <input type="file"
+                      class="form-control"                      
+                      accept=".csv"
+                      name="uploadedFile"
+                      ng-model="imgFile"
+                      file-model="myFile"
+                      placeholder="Upload arquivo"
+                      valid-file
+                      required>                                   
+                </div>
+              </div>                            
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button data-bb-handler="cancel"
+        data-ng-click="$dismiss()"
+        type="button"
+        class="btn btn-warning">
+      Cancel
+    </button>
+    <a class="btn btn-primary"
+        data-ng-class="{'disabled': uploadForm.$invalid}"
+        data-ng-click="submit()" data-dismiss="modal">
+      OK
+    </a>
+  </div>
+</div>
