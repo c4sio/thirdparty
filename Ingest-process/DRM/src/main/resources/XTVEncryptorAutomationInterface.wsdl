@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!-- Copyright (C) NDS Limited 2008. -->
+	<!--
+		* All rights reserved. 
+		* No part of this program may be reproduced, translated or transmitted, 
+		* in any form or by any means, electronic, mechanical, photocopying, 
+		* recording or otherwise, or stored in any retrieval system of any nature, 
+		* without written permission of the copyright holder. 
+		* 
+		* Version Date Author Details 
+		* 1.0.0 11/06/2007 Salik Miah Initial version 
+		* 1.0.1 25/09/2007 Salik Miah Change cryptoperiod to be now an optional parameter 
+		* 1.0.2 25/04/2008 Salik Miah Change cryptoperiod type to unsignedLong 
+		* 1.1.0 07/01/2009 Swindells Thomas Make almost all job parameters optional, 
+		* 1.2.0 10/02/2010 Swindells Thomas Add soap fault support, system information call and feature support *
+	-->
+
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:y="http://xtve.tvp.nds.com/XTVEncryptorAutomationInterface/"
+	targetNamespace="http://xtve.tvp.nds.com/XTVEncryptorAutomationInterface/">
+	<types>
+		<xs:schema elementFormDefault="qualified"
+			targetNamespace="http://xtve.tvp.nds.com/XTVEncryptorAutomationInterface/">
+
+			<xs:complexType name="Feature">
+				<xs:all>
+					<xs:element maxOccurs="1" minOccurs="1" name="name"
+						type="xs:string" />
+					<xs:element maxOccurs="1" minOccurs="0" name="value"
+						type="xs:string" />
+				</xs:all>
+			</xs:complexType>
+
+			<!-- SystemInformation types-->
+			<xs:complexType name="ConnectionTime">
+				<xs:all>
+					<xs:element maxOccurs="1" minOccurs="1" name="ai" type="xs:long" />
+					<xs:element maxOccurs="1" minOccurs="1" name="engine"
+						type="xs:long" />
+					<xs:element maxOccurs="1" minOccurs="1" name="ca" type="xs:long" />
+				</xs:all>
+			</xs:complexType>
+
+			<xs:complexType name="ClientCapacity">
+				<xs:all>
+					<xs:element maxOccurs="1" minOccurs="1" name="capacity"
+						type="xs:int" />
+					<xs:element maxOccurs="1" minOccurs="1" name="available"
+						type="xs:int" />
+				</xs:all>
+			</xs:complexType>
+
+			<xs:complexType name="ClientRegistration">
+				<xs:all>
+					<xs:element maxOccurs="1" minOccurs="1" name="clientCookie"
+						type="xs:unsignedLong" />
+					<xs:element maxOccurs="1" minOccurs="1" name="lastRequest"
+						type="xs:long" />
+					<xs:element maxOccurs="1" minOccurs="1" name="active"
+						type="xs:boolean" />
+					<xs:element maxOccurs="1" minOccurs="0" name="jobNumber"
+						type="xs:unsignedLong" />
+				</xs:all>
+			</xs:complexType>
+
+
+			<xs:complexType name="ClientRegistrations">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="ClientRegistration" type="y:ClientRegistration" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="CurrentTime">
+				<xs:sequence>
+					<xs:element maxOccurs="1" minOccurs="1"	name="time" type="xs:long" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<!-- Method In/out elements -->
+
+			<xs:element name="RegisterClientIn">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="1" minOccurs="0" name="NotificationURL"
+							type="xs:string" />
+						<xs:element name="Features" type="y:Feature" minOccurs="0"
+							maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RegisterClientOut">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="1" minOccurs="1" name="ClientCookie"
+							type="xs:unsignedLong" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="SystemInformationIn">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Features" type="y:Feature" minOccurs="0"
+							maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SystemInformationOut">
+				<xs:complexType>
+					<xs:sequence>
+						<!--
+							all the supported features, with current value where appropriate,
+							always returned
+						-->
+						<xs:element name="Features" type="y:Feature" minOccurs="0"
+							maxOccurs="unbounded" />
+						<!--ConnectionTime feature information-->
+						<xs:element name="ConnectionTime" type="y:ConnectionTime"
+							minOccurs="0" maxOccurs="1" />
+						<!-- ClientCapacity feature information -->
+						<xs:element name="ClientCapacity" type="y:ClientCapacity"
+							minOccurs="0" maxOccurs="1" />
+						<!-- ClientRegistrations feature information -->
+						<xs:element name="ClientRegistrations" type="y:ClientRegistrations"
+							minOccurs="0" maxOccurs="1" />
+						<!-- ClientRegistrations feature information -->
+						<xs:element maxOccurs="1" minOccurs="0" 
+							name="CurrentTime" type="y:CurrentTime" />
+
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="UnregisterClientIn">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="1" minOccurs="1" name="ClientCookie"
+							type="xs:unsignedLong" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="EncryptContentIn">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="1" minOccurs="1" name="ClientCookie"
+							type="xs:unsignedLong" />
+						<xs:element maxOccurs="1" minOccurs="0" name="JobType"
+							type="xs:unsignedByte" />
+						<xs:element maxOccurs="1" minOccurs="1" name="SourceLoc"
+							type="xs:string" />
+						<xs:element maxOccurs="1" minOccurs="0" name="DestLoc"
+							type="xs:string" />
+						<xs:element maxOccurs="1" minOccurs="0" name="MetadataLoc"
+							type="xs:string" />
+						<xs:element maxOccurs="1" minOccurs="1" name="Physical_CRID"
+							type="xs:string" />
+						<xs:element maxOccurs="1" minOccurs="0" name="Clip_CRID"
+							type="xs:string" />
+						<xs:element maxOccurs="1" minOccurs="0" name="Title"
+							type="xs:string" />
+						<xs:element maxOccurs="1" minOccurs="0" name="StreamTypes"
+							type="xs:unsignedByte" />
+						<xs:element maxOccurs="1" minOccurs="0" name="AccessCriteria"
+							type="xs:string" />
+						<!-- CryptoPeriod value should not exceed 43200000 ms-->
+						<xs:element maxOccurs="1" minOccurs="0" name="CryptoPeriod"
+							type="xs:unsignedLong" />
+						<xs:element maxOccurs="1" minOccurs="0"
+							name="DeleteInputAfterProcess" type="xs:unsignedByte" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="EncryptContentOut">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="1" minOccurs="1" name="ClientCookie"
+							type="xs:unsignedLong" />
+						<xs:element maxOccurs="1" minOccurs="1" name="JobNumber"
+							type="xs:unsignedLong" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="HeartbeatIn">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="1" minOccurs="1" name="ClientCookie"
+							type="xs:unsignedLong" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="HeartbeatOut">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="1" minOccurs="1" name="ClientCookie"
+							type="xs:unsignedLong" />
+						<xs:element maxOccurs="1" minOccurs="1" name="JobNumber"
+							type="xs:unsignedLong" />
+						<xs:element maxOccurs="1" minOccurs="0" name="JobType"
+							type="xs:unsignedByte" />
+						<xs:element maxOccurs="1" minOccurs="1" name="StatusCode"
+							type="xs:unsignedByte" />
+						<xs:element maxOccurs="1" minOccurs="0"
+							name="PercentageComplete" type="xs:unsignedByte" />
+						<xs:element maxOccurs="1" minOccurs="1" name="StatusDetails"
+							type="xs:string" />
+						<xs:element maxOccurs="1" minOccurs="0" name="ErrorCode"
+							type="xs:string" />
+						<xs:element maxOccurs="1" minOccurs="0"
+							name="PhysicalContentFile" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AbortEncryptionIn">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="1" minOccurs="1" name="ClientCookie"
+							type="xs:unsignedLong" />
+						<xs:element maxOccurs="1" minOccurs="1" name="JobNumber"
+							type="xs:unsignedLong" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AbortEncryptionOut">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="1" minOccurs="1" name="ClientCookie"
+							type="xs:unsignedLong" />
+						<xs:element maxOccurs="1" minOccurs="1" name="JobNumber"
+							type="xs:unsignedLong" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="AIFault">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="message" type="xs:string" maxOccurs="1"
+							minOccurs="1" />
+						<xs:element name="errorCode" type="xs:string"
+							maxOccurs="1" minOccurs="1" />
+						<xs:element name="value" type="xs:string" maxOccurs="1"
+							minOccurs="0" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+		</xs:schema>
+	</types>
+	<message name="RegisterClient">
+		<part name="parameters" element="y:RegisterClientIn" />
+	</message>
+	<message name="RegisterClientResponse">
+		<part name="parameters" element="y:RegisterClientOut" />
+	</message>
+	<message name="SystemInformation">
+		<part name="parameters" element="y:SystemInformationIn" />
+	</message>
+	<message name="SystemInformationResponse">
+		<part name="parameters" element="y:SystemInformationOut" />
+	</message>
+	<message name="UnregisterClient">
+		<part name="parameters" element="y:UnregisterClientIn" />
+	</message>
+	<message name="EncryptContent">
+		<part name="parameters" element="y:EncryptContentIn" />
+	</message>
+	<message name="EncryptContentResponse">
+		<part name="parameters" element="y:EncryptContentOut" />
+	</message>
+	<message name="Heartbeat">
+		<part name="parameters" element="y:HeartbeatIn" />
+	</message>
+	<message name="HeartbeatResponse">
+		<part name="parameters" element="y:HeartbeatOut" />
+	</message>
+	<message name="AbortEncryption">
+		<part name="parameters" element="y:AbortEncryptionIn" />
+	</message>
+	<message name="AbortEncryptionResponse">
+		<part name="parameters" element="y:AbortEncryptionOut" />
+	</message>
+	<message name="AIFaultException">
+		<part name="fault" element="y:AIFault" />
+	</message>
+
+	<portType name="XTVEncryptorAutomationInterface">
+		<operation name="RegisterClient">
+			<input message="y:RegisterClient" />
+			<output message="y:RegisterClientResponse" />
+			<fault message="y:AIFaultException" name="AIFault" />
+		</operation>
+		<operation name="SystemInformation">
+			<input message="y:SystemInformation" />
+			<output message="y:SystemInformationResponse" />
+			<fault message="y:AIFaultException" name="AIFault" />
+		</operation>
+		<operation name="UnregisterClient">
+			<input message="y:UnregisterClient" />
+			<fault message="y:AIFaultException" name="AIFault" />
+		</operation>
+		<operation name="EncryptContent">
+			<input message="y:EncryptContent" />
+			<output message="y:EncryptContentResponse" />
+			<fault message="y:AIFaultException" name="AIFault" />
+		</operation>
+		<operation name="Heartbeat">
+			<input message="y:Heartbeat" />
+			<output message="y:HeartbeatResponse" />
+			<fault message="y:AIFaultException" name="AIFault" />
+		</operation>
+		<operation name="AbortEncryption">
+			<input message="y:AbortEncryption" />
+			<output message="y:AbortEncryptionResponse" />
+			<fault message="y:AIFaultException" name="AIFault" />
+		</operation>
+	</portType>
+	<binding name="XTVEncryptorAutomationInterface" type="y:XTVEncryptorAutomationInterface">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"
+			style="document" />
+		<operation name="RegisterClient">
+			<soap:operation
+				soapAction="http://xtve.tvp.nds.com/XTVEncryptorAutomationInterface/RegisterClient" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="AIFault">
+				<soap:fault name="AIFault" use="literal" />
+			</fault>
+		</operation>
+		<operation name="UnregisterClient">
+			<soap:operation
+				soapAction="http://xtve.tvp.nds.com/XTVEncryptorAutomationInterface/UnregisterClient" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<fault name="AIFault">
+				<soap:fault name="AIFault" use="literal" />
+			</fault>
+		</operation>
+		<operation name="SystemInformation">
+			<soap:operation
+				soapAction="http://xtve.tvp.nds.com/XTVEncryptorAutomationInterface/SystemInformation" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="AIFault">
+				<soap:fault name="AIFault" use="literal" />
+			</fault>
+		</operation>
+		<operation name="EncryptContent">
+			<soap:operation
+				soapAction="http://xtve.tvp.nds.com/XTVEncryptorAutomationInterface/EncryptContent" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="AIFault">
+				<soap:fault name="AIFault" use="literal" />
+			</fault>
+		</operation>
+		<operation name="Heartbeat">
+			<soap:operation
+				soapAction="http://xtve.tvp.nds.com/XTVEncryptorAutomationInterface/Heartbeat" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="AIFault">
+				<soap:fault name="AIFault" use="literal" />
+			</fault>
+		</operation>
+		<operation name="AbortEncryption">
+			<soap:operation
+				soapAction="http://xtve.tvp.nds.com/XTVEncryptorAutomationInterface/AbortEncryption" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="AIFault">
+				<soap:fault name="AIFault" use="literal" />
+			</fault>
+		</operation>
+	</binding>
+	<service name="XTVEAutomationInterface">
+		<documentation>XTVE Automation Interface Version 2</documentation>
+		<port name="XTVEAutomationInterface" binding="y:XTVEncryptorAutomationInterface">
+			<soap:address
+				location="http://xtve.tvp.nds.com/XTVEncryptorAutomationInterface/XTVEncryptorAutomationInterface.asmx" />
+		</port>
+	</service>
+</definitions>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+	<util:list id="requiredFields" value-type="java.lang.String">
+		<value>Genre</value>
+		<value>Rating</value>
+		<value>Run_Time</value>
+		<value>Year</value>
+		<value>Rating</value>
+		<value>Licensing_Window_Start</value>
+		<value>Licensing_Window_End</value>
+		<value>Content_FileSize</value>
+		<value>Content_CheckSum</value>
+	</util:list>
+</beans>
