@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Criar Usuário</title>
+		<meta name="description" content="Cadastro usuário">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link rel="stylesheet" href="../css/gvt-bootstrap.css">
+		<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+	</head>
+
+	<body class="no-skin" data-ng-app="myapp">
+	
+		<div data-ng-controller="MyController" class="container pricing-box">	
+		
+			<div class="row">				
+				<img src="../img/header.png" class="img-responsive img-rounded img-thumbnail">				        									
+			</div>
+			
+			<div class="row">
+				<div class="page-header">
+					<h1>Cadastrar Usuário</h1>								
+				</div>
+			</div>
+			
+			<!-- Mensagem de retorno -->
+			<div class="row">			
+				<div data-ng-show="retorno">
+  					<div class="col-xs-6 col-md-6">
+  						<button data-ng-show="retorno" type="button" class="btn btn-warning btn-xs" ng-click="hideRetorno()">X</button>
+  						<div id="retorno" class="alert alert-success" data-ng-show="retorno && error == false" data-ng-bind="retorno"></div>
+  						<div id="retorno" class="alert alert-warning" data-ng-show="retorno && error == true" data-ng-bind="retorno"></div>
+  					</div>
+        		</div>        	
+        	</div>
+        	
+        	<!-- Mensagem de loading -->
+        	<div class="row">
+        		<div data-ng-show="clicked==true" class="alert alert-info no-margin col-xs-6 col-md-6">
+    				<i class="fa fa-cog fa-spin"></i> Aguarde...
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-xs-12">
+					<!-- Form Holder -->
+					<div>
+						<form class="form-horizontal" name="myUserForm" novalidate role="form" ng-submit="submitTheForm()">
+							
+							<div class="form-group">
+						      <div class="col-md-6">
+						         <label class="control-label no-padding-right" for="name">Nome Completo</label>						         
+						         <span class="label label-danger" data-ng-show="submitted && myUserForm.name.$error.required">Obrigatório!</span>
+						         <input type="text" name="name" data-ng-model="name" class="form-control" maxlength="50" required  />
+						      </div>
+						    </div>
+						    
+						    <div class="form-group">
+						      	<div class="col-md-6">
+						      		<label class="control-label no-padding-right" for="email">E-mail de contato</label>
+						      		<span class="label label-danger" data-ng-show="submitted && myUserForm.email.$error.required">Obrigatório!</span>
+						      		<span class="label label-danger" data-ng-show="submitted && myUserForm.email.$error.email">E-mail inválido!</span>
+						      	<input type="email" name="email" data-ng-model="email" class="form-control" maxlength="70" required />  
+						    	</div>
+						    </div>
+							
+							<div class="form-group">
+						      	<div class="col-md-6">
+						      		<label class="control-label no-padding-right" for="subscreberId">CRM Customer 
+						      		<a href="#"><span class="glyphicon glyphicon-info-sign green" aria-hidden="true" tabindex="0" data-toggle="popover" data-trigger="focus" title="Atenção" 
+						      		data-content="Informação disponível em sua fatura GVT, no detalhamento dos serviços de TV (Exemplo: TV-ACG-81DTDRIP1-050)"></span></a></label>
+						      		<span class="label label-danger" data-ng-show="submitted && myUserForm.subscreberId.$error.required">Obrigatório!</span>
+						      		<input type="text" name="subscreberId" data-ng-model="subscreberId" class="form-control" maxlength="60" required />  
+						    	</div>
+						    </div>
+							
+							<div class="form-group">
+						      	<div class="col-md-6">
+						      		<label class="control-label no-padding-right" for="subscreberId">Senha</label>
+						      		<span class="label label-danger" data-ng-show="submitted && myUserForm.password.$error.required">Obrigatório!</span>
+						      		<span class="label label-danger" data-ng-show="submitted && myUserForm.password.$error.minlength">Password deve conter no mínimo 6 caracteres!</span>
+						      		<input type="password" name="password" data-ng-model="password" class="form-control" ng-minlength="6" ng-maxlength="12" required />  
+						    	</div>
+						    </div>
+						    
+						    <div class="form-group">
+						      	<div class="col-md-6">
+						      		<label class="control-label no-padding-right" for="androidId">E-mail de acesso ao Google Play</label>
+						      		<span class="label label-danger" data-ng-show="submitted && myUserForm.androidId.$error.email">E-mail inválido!</span>						      		
+						      		<input type="email" name="androidId" data-ng-model="androidId" class="form-control" maxlength="70" />  
+						    	</div>
+						    </div>						    						   
+						    
+						    <div class="form-group">
+						      	<div class="col-md-6">
+						      		<label class="control-label no-padding-right" for="appleId">E-mail de acesso ao Apple Store</label>
+						      		<span class="label label-danger" data-ng-show="submitted && myUserForm.appleId.$error.email">E-mail inválido!</span>						      		
+						      		<input type="email" name="appleId" data-ng-model="appleId" class="form-control" maxlength="70" />  
+						    	</div>
+						    </div>
+						    						     
+							<div class="col-md-6">
+								<button class="btn btn-primary" type="submit" ng-disabled="clicked">  Enviar  </button>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>	
+		<script type="text/javascript" src="../js/app.js"></script>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/tooltip.js"></script>
+		<script type="text/javascript" src="../js/popover.js"></script>		
+		<script>$(function () 
+      		{$("[data-toggle='popover']").popover();});
+   		</script>
+	</body>
+</html>

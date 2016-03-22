@@ -1,0 +1,8 @@
+# ELASTICSEARCH - SERVIDORES
+
+URL_TESTE: http://177.135.68.185:9200/portal/users/TV-JPA-8174M2ZH9-050
+URL_HOMOLOGACAO: http://186.215.183.201:9200/portal/users/TV-JPA-8174M2ZH9-050
+
+# DASHBOARD
+
+http://177.135.68.185:81/control/index.html#/dashboard/file/guided.json
